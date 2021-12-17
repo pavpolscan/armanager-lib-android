@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.scandit.datacapture:barcode:6.10.1@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/16644dcc8c5b84e37d86c47cf2cc947d/transformed/jetified-barcode-6.10.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/16644dcc8c5b84e37d86c47cf2cc947d/transformed/jetified-barcode-6.10.1/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/16644dcc8c5b84e37d86c47cf2cc947d/transformed/jetified-barcode-6.10.1/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
