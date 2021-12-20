@@ -108,6 +108,12 @@ public class ARManagerImpl implements ARManager{
         ARView templateInstance=createView(this.context,rows);
         copyTemplateStyle(template,templateInstance);
         for (int i=0; i < rows.length; i++) {
+            RowStyle rowStyle=template.getRowStyle(i);
+            templateInstance.setRowStyle(i
+                    ,rowStyle.getColor()
+                    ,rowStyle.getBackgroundColor()
+                    ,rowStyle.getAlpha());
+
             for (int j=0; j < rows[i]; j++) {
                 assignNameToTemplateInstanceCell(template, templateInstance, i, j);
                 copyCellStyle(template,templateInstance,i,j);

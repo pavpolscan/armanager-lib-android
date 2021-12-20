@@ -79,6 +79,10 @@ public class ARView extends LinearLayout {
         );
     }
 
+    public void setCornerRadii(float[] radii){
+
+    }
+
     private int getColumnsCount(int[] rows) {
         List l=new LinkedList();
         for (int i:rows){
@@ -203,6 +207,10 @@ public class ARView extends LinearLayout {
             getCellView(row, j).setBackgroundColor(backgroundColor);
             getCellView(row, j).setAlpha(alpha);
         }
+    }
+
+    public RowStyle getRowStyle(int rowIndex){
+        return rowStyleHashMap.get(Integer.valueOf(rowIndex));
     }
 
 }
