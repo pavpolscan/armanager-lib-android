@@ -20,6 +20,7 @@ import androidx.annotation.RequiresApi;
 import org.jetbrains.annotations.NotNull;
 import org.w3c.dom.Text;
 
+import java.sql.RowId;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -35,8 +36,10 @@ public class ARView extends LinearLayout {
     private int[] rows;
     private int columnsCount;
     private int headerRowCount=0;
-    private HashMap<ARCellId,ARCell> cellMap=new HashMap<>();
-    private HashMap<String,ARCell> cellByNameMap=new HashMap<>();
+    private int footerRowCount=0;
+    private HashMap<ARCellId,ARCell> cellMap=new HashMap<ARCellId,ARCell>();
+    private HashMap<String,ARCell> cellByNameMap=new HashMap<String,ARCell>();
+    private HashMap<Integer,RowStyle> rowStyleHashMap =new HashMap<Integer, RowStyle>();
 
     public ARView(Context context) {
         super(context);
@@ -118,6 +121,11 @@ public class ARView extends LinearLayout {
         return null;
     }
 
+    public ARCell getCell(String cellName){
+        ARCell arCell=cellByNameMap.get(cellName);
+        return arCell;
+    }
+
     public int[] getRows(){
         return this.rows;
     }
@@ -131,16 +139,18 @@ public class ARView extends LinearLayout {
         }
     }
 
+    public void setHeaderRowsCountAndStyle(int count, int textColor, int backgroundColor, float alpha){
+        setHeaderRowCount(count);
+        setHeaderRowStyle(textColor, backgroundColor, alpha);
+    }
+
     public void setHeaderRowCount(int count){
         this.headerRowCount=count;
     }
 
-    private String getCellDefaultContent(@NotNull int row, @NotNull int cell){
-        return "("+String.valueOf(row)+","+String.valueOf(cell)+")";
-    }
-
     public void setHeaderRowStyle(int textColor, int backgroundColor, float alpha) {
         for (int i = 0; i<headerRowCount;i++){
+            rowStyleHashMap.put(Integer.valueOf(i),new RowStyle(textColor,backgroundColor,alpha));
             for (int j=0; j < rows[i]; j++) {
                 getCellView(i, j).setTextColor(textColor);
                 getCellView(i, j).setBackgroundColor(backgroundColor);
@@ -149,13 +159,35 @@ public class ARView extends LinearLayout {
         }
     }
 
-    public void setRowsStyle(int textColor, int backgroundColor, float alpha){
-        for (int i = headerRowCount; i<rows.length;i++){
+    public void setFooterRowsCountAndStyle(int count, int textColor, int backgroundColor, float alpha){
+        setFooterRowCount(count);
+        setFooterRowStyle(textColor, backgroundColor, alpha);
+    }
+
+    public void setFooterRowCount(int count){
+        this.footerRowCount=count;
+    }
+
+    public void setFooterRowStyle(int textColor, int backgroundColor, float alpha) {
+        for (int i = rows.length-1; i>(rows.length-footerRowCount-1);i--){
+            rowStyleHashMap.put(Integer.valueOf(i),new RowStyle(textColor,backgroundColor,alpha));
             for (int j=0; j < rows[i]; j++) {
                 getCellView(i, j).setTextColor(textColor);
                 getCellView(i, j).setBackgroundColor(backgroundColor);
                 getCellView(i, j).setAlpha(alpha);
             }
+        }
+    }
+
+    private String getCellDefaultContent(@NotNull int row, @NotNull int cell){
+        return "("+String.valueOf(row)+","+String.valueOf(cell)+")";
+    }
+
+    public void setRowStyle(int row, int textColor, int backgroundColor, float alpha){
+        for (int j=0; j < rows[row]; j++) {
+            getCellView(row, j).setTextColor(textColor);
+            getCellView(row, j).setBackgroundColor(backgroundColor);
+            getCellView(row, j).setAlpha(alpha);
         }
     }
 
