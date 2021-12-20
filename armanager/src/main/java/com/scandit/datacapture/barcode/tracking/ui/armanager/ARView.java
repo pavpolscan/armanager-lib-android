@@ -126,6 +126,13 @@ public class ARView extends LinearLayout {
         return arCell;
     }
 
+    public RowStyle getCellStyle(String cellName){
+        ARCell arCell = getCell(cellName);
+        int row = arCell.getCellId().getRow();
+        RowStyle rowStyle = rowStyleHashMap.get(Integer.valueOf(row));
+        return rowStyle;
+    }
+
     public int[] getRows(){
         return this.rows;
     }
@@ -183,7 +190,14 @@ public class ARView extends LinearLayout {
         return "("+String.valueOf(row)+","+String.valueOf(cell)+")";
     }
 
+    public void setRowsStyle(int textColor, int backgroundColor, float alpha){
+        for (int i = headerRowCount; i<(rows.length-footerRowCount);i++){
+            setRowStyle(i,textColor,backgroundColor,alpha);
+        }
+    }
+
     public void setRowStyle(int row, int textColor, int backgroundColor, float alpha){
+        rowStyleHashMap.put(Integer.valueOf(row),new RowStyle(textColor,backgroundColor,alpha));
         for (int j=0; j < rows[row]; j++) {
             getCellView(row, j).setTextColor(textColor);
             getCellView(row, j).setBackgroundColor(backgroundColor);
