@@ -145,6 +145,11 @@ public class ARManagerImpl implements ARManager{
 
         instanceView.setGravity(templateView.getGravity());
 
+        instanceView.setPadding (templateView.getPaddingLeft()
+                                ,templateView.getPaddingTop()
+                                ,templateView.getPaddingRight()
+                                ,templateView.getPaddingBottom());
+
     }
 
     private void assignNameToTemplateInstanceCell(ARView template, ARView templateInstance, int i, int j) {
