@@ -3,38 +3,25 @@ package com.scandit.datacapture.barcode.tracking.ui.armanager;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.os.Build;
-import android.util.AttributeSet;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-
 import org.jetbrains.annotations.NotNull;
-import org.w3c.dom.Text;
 
-import java.sql.RowId;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.concurrent.CancellationException;
 
 public class ARView extends LinearLayout {
 
     private int[] rows;
+    private float[] radii={0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f};
     private int columnsCount;
     private int headerRowCount=0;
     private int footerRowCount=0;
@@ -80,7 +67,35 @@ public class ARView extends LinearLayout {
         );
     }
 
+    public float[] getRadii() {
+        return this.radii;
+    }
+
+    public void setCornersRadius(int pxTopLeft, int pxTopRight, int pxBottomRight, int pxBottomLeft){
+        setCornerRaduisTopLeft(pxTopLeft);
+        setCornerRadiusTopRight(pxTopRight);
+        setCornerRadiusBottomRight(pxBottomRight);
+        setCornerRadiusBottomLeft(pxBottomLeft);
+    }
+
+    public void setCornerRaduisTopLeft(int pixelRadius){
+        this.radii[0]=pixelRadius;this.radii[1]=pixelRadius;
+    }
+
+    public void setCornerRadiusTopRight(int pixelRadius){
+        this.radii[2]=pixelRadius;this.radii[3]=pixelRadius;
+    }
+
+    public void setCornerRadiusBottomRight(int pixelRadius){
+        this.radii[4]=pixelRadius;this.radii[5]=pixelRadius;
+    }
+
+    public void setCornerRadiusBottomLeft(int pixelRadius){
+        this.radii[6]=pixelRadius;this.radii[7]=pixelRadius;
+    }
+
     public void setCornerRadii(float[] radii){
+        this.radii=radii;
         ARCell topLeft, topRight, bottomLeft, bottomRight = null;
 
         boolean isTopSingleCell= getRows()[0] > 1 ? false : true ;
@@ -112,21 +127,21 @@ public class ARView extends LinearLayout {
         if (isBottomSingleCell) {
             GradientDrawable shapeBottom=new GradientDrawable();
             shapeBottom.setCornerRadii(new float[] {0.0f,0.0f,0.0f,0.0f,radii[4],radii[5],radii[6],radii[7]});
-            shapeBottom.setColor(getRowStyle(0).getBackgroundColor());
+            shapeBottom.setColor(getRowStyle(this.getRows().length - 1).getBackgroundColor());
             bottomLeft.getView().setBackground(shapeBottom);
         }
         else{
             bottomRight = getCell(getRows().length-1,getRows()[getRows().length-1]-1);
 
-            GradientDrawable shapeBottomLeft=new GradientDrawable();
-            shapeBottomLeft.setCornerRadii(new float[] {0.0f,0.0f,0.0f,0.0f,radii[4],radii[5],0.0f,0.0f});
-            shapeBottomLeft.setColor(getRowStyle(getRows()[getRows().length-1]).getBackgroundColor());
-            bottomLeft.getView().setBackground(shapeBottomLeft);
-
             GradientDrawable shapeBottomRight=new GradientDrawable();
-            shapeBottomRight.setCornerRadii(new float[] {0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,radii[6],radii[7]});
-            shapeBottomRight.setColor(getRowStyle(getRows()[getRows().length-1]).getBackgroundColor());
+            shapeBottomRight.setCornerRadii(new float[] {0.0f,0.0f,0.0f,0.0f,radii[4],radii[5],0.0f,0.0f});
+            shapeBottomRight.setColor(getRowStyle(this.getRows().length - 1).getBackgroundColor());
             bottomRight.getView().setBackground(shapeBottomRight);
+
+            GradientDrawable shapeBottomLeft=new GradientDrawable();
+            shapeBottomLeft.setCornerRadii(new float[] {0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,radii[6],radii[7]});
+            shapeBottomLeft.setColor(getRowStyle(this.getRows().length - 1).getBackgroundColor());
+            bottomLeft.getView().setBackground(shapeBottomLeft);
         }
     }
 
