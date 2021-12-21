@@ -119,6 +119,9 @@ public class ARManagerImpl implements ARManager{
                 copyCellStyle(template,templateInstance,i,j);
             }
         }
+
+        templateInstance.setCornerRadii(template.getRadii());
+
         return templateInstance;
     }
 
