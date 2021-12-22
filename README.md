@@ -202,7 +202,8 @@ Once configuration of ARManager is done, you can use the ARManager by passing to
 - TrackedBarcode - contains data about barcode which is being tracked by Scandit BarcodeTracking
 - Map<String,String> barcodeValuesMap - strings key/value map which contains data that should be displayed for barcode. ARManager will take only those values, keys for which are present on template and populate with on ARView.
 
-**Please use BarcodeTrackingAdvancedOverlayListener.viewForTrackedBarcode method to construct views with ARManager  **
+**Please use BarcodeTrackingAdvancedOverlayListener.viewForTrackedBarcode method to construct views with ARManager**
+
 ```
 @Nullable
 @Override
