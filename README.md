@@ -1,4 +1,5 @@
 # armanager-lib-android
+ 
 Main goal of ARManager - ease life with creation/population/resizing and rotation of Scandit MatrixScan Augmented Reality views for the trackedBarcodes on the screen in case BarcodeTrackingAdvancedLayoutOverlay is used.
 
 This is simple project to test an idea of reference AR implementation with following ideas in mind:
@@ -7,9 +8,20 @@ This is simple project to test an idea of reference AR implementation with follo
 - named aliases for cells to address cells with same data on different templates
 - ready to use yet extensible for your own needs
 
-This repo contains ARManager library alone (test app is not included)
+This repo contains ARManager library alone (test app is not included). 
 
-## Concept
+## Dependencies
+ARManager is a dedicated AR-centric library for proprietary Scandit Data Capture SDK for Android v.6.10+. 
+
+While ARManager is an open project, Scandit is a proprietary software. 
+
+Please make sure to read Scandit SDK Android documentation https://docs.scandit.com/data-capture-sdk/android/index.html and check sample apps (https://docs.scandit.com/data-capture-sdk/android/samples/run-samples.html) to get better idea of Scandit capabilities.
+
+## Background & Concept
+Scandit SDK provides very open (unconstrained actually) way to implement your own Augmented Reality view for any barcode being tracked on the screen of device. This is done by implementation of [BarcodeTrackingAdvancedOverlayListener.viewForTrackedBarcode()](https://docs.scandit.com/data-capture-sdk/android/barcode-capture/api/ui/barcode-tracking-advanced-overlay-listener.html#method-scandit.datacapture.barcode.tracking.ui.IBarcodeTrackingAdvancedOverlayListener.ViewForTrackedBarcode) method within Activity/Fragment. However, flexibility and opennes comes with a cost of 'from scratch' implementation of AR for your project. 
+
+Plenty small- and mid-size projects would benefit from  simple framework for AR - by solving very common needs of developers.
+
 Let's suppose that at runtime we track barcodes and need to produce AR popup (View) for each barcode in the frame -  it could be a barcode of a parcel or barcode of a product price label on the supermarket shelf etc. 
 
 ![image](https://user-images.githubusercontent.com/70104733/147053541-620a298f-77e8-452c-8289-7c36ef81301e.png)
