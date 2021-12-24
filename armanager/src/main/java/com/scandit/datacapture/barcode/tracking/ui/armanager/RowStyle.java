@@ -5,7 +5,7 @@ public class RowStyle {
     private int backgroundColor;
     private float alpha;
 
-    public RowStyle(int color, int backgroundColor, float alpha){
+    public RowStyle(final int color,final int backgroundColor, final float alpha){
         this.setColor(color);
         this.setBackgroundColor(backgroundColor);
         this.setAlpha(alpha);
@@ -15,7 +15,7 @@ public class RowStyle {
         return color;
     }
 
-    public void setColor(int color) {
+    public void setColor(final int color) {
         this.color = color;
     }
 
@@ -23,7 +23,7 @@ public class RowStyle {
         return backgroundColor;
     }
 
-    public void setBackgroundColor(int backgroundColor) {
+    public void setBackgroundColor(final int backgroundColor) {
         this.backgroundColor = backgroundColor;
     }
 
@@ -31,7 +31,7 @@ public class RowStyle {
         return alpha;
     }
 
-    public void setAlpha(float alpha) {
+    public void setAlpha(final float alpha) {
         this.alpha = alpha;
     }
 }

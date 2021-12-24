@@ -42,11 +42,4 @@ public class ARCellId {
                 cell == arCellId.cell &&
                 Objects.equals(cellName, arCellId.cellName);
     }
-
-
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(row, cell, cellName);
-//    }
 }
