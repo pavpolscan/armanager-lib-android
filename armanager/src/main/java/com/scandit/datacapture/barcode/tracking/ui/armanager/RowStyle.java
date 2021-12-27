@@ -1,11 +1,13 @@
 package com.scandit.datacapture.barcode.tracking.ui.armanager;
 
+import androidx.annotation.ColorInt;
+
 public class RowStyle {
     private int color;
     private int backgroundColor;
     private float alpha;
 
-    public RowStyle(final int color,final int backgroundColor, final float alpha){
+    public RowStyle(@ColorInt final int color, @ColorInt final int backgroundColor, final float alpha){
         this.setColor(color);
         this.setBackgroundColor(backgroundColor);
         this.setAlpha(alpha);
@@ -15,7 +17,7 @@ public class RowStyle {
         return color;
     }
 
-    public void setColor(final int color) {
+    public void setColor(@ColorInt final int color) {
         this.color = color;
     }
 
@@ -23,7 +25,7 @@ public class RowStyle {
         return backgroundColor;
     }
 
-    public void setBackgroundColor(final int backgroundColor) {
+    public void setBackgroundColor(@ColorInt final int backgroundColor) {
         this.backgroundColor = backgroundColor;
     }
 

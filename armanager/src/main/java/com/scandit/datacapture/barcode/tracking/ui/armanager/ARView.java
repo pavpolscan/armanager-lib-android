@@ -10,6 +10,10 @@ import android.widget.LinearLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.Px;
+import androidx.annotation.Size;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
@@ -71,30 +75,30 @@ public class ARView extends LinearLayout {
         return this.radii;
     }
 
-    public void setCornersRadius(final int pxTopLeft, final int pxTopRight, final int pxBottomRight, final int pxBottomLeft){
+    public void setCornersRadius(@Px final int pxTopLeft, @Px final int pxTopRight, @Px final int pxBottomRight, @Px final int pxBottomLeft){
         setCornerRaduisTopLeft(pxTopLeft);
         setCornerRadiusTopRight(pxTopRight);
         setCornerRadiusBottomRight(pxBottomRight);
         setCornerRadiusBottomLeft(pxBottomLeft);
     }
 
-    public void setCornerRaduisTopLeft(final int pixelRadius){
+    public void setCornerRaduisTopLeft(@Px final int pixelRadius){
         this.radii[0]=pixelRadius;this.radii[1]=pixelRadius;
     }
 
-    public void setCornerRadiusTopRight(final int pixelRadius){
+    public void setCornerRadiusTopRight(@Px final int pixelRadius){
         this.radii[2]=pixelRadius;this.radii[3]=pixelRadius;
     }
 
-    public void setCornerRadiusBottomRight(final int pixelRadius){
+    public void setCornerRadiusBottomRight(@Px final int pixelRadius){
         this.radii[4]=pixelRadius;this.radii[5]=pixelRadius;
     }
 
-    public void setCornerRadiusBottomLeft(final int pixelRadius){
+    public void setCornerRadiusBottomLeft(@Px final int pixelRadius){
         this.radii[6]=pixelRadius;this.radii[7]=pixelRadius;
     }
 
-    public void setCornerRadii(final float[] radii){
+    public void setCornerRadii(@Size(8) final float[] radii){
         this.radii=radii;
         ARCell topLeft, topRight, bottomLeft, bottomRight = null;
 
@@ -212,7 +216,7 @@ public class ARView extends LinearLayout {
         }
     }
 
-    public void setHeaderRowsCountAndStyle(final int count, final int textColor, final int backgroundColor, final float alpha){
+    public void setHeaderRowsCountAndStyle(final int count, @ColorInt final int textColor, @ColorInt final int backgroundColor, final float alpha){
         setHeaderRowCount(count);
         setHeaderRowStyle(textColor, backgroundColor, alpha);
     }
@@ -221,9 +225,9 @@ public class ARView extends LinearLayout {
         this.headerRowCount=count;
     }
 
-    public void setHeaderRowStyle(final int textColor, final int backgroundColor, final float alpha) {
+    public void setHeaderRowStyle(@ColorInt final int textColor, @ColorInt final int backgroundColor, final float alpha) {
         for (int i = 0; i<headerRowCount;i++){
-            rowStyleHashMap.put(Integer.valueOf(i),new RowStyle(textColor,backgroundColor,alpha));
+            rowStyleHashMap.put(i,new RowStyle(textColor,backgroundColor,alpha));
             for (int j=0; j < rows[i]; j++) {
                 getCellView(i, j).setTextColor(textColor);
                 getCellView(i, j).setBackgroundColor(backgroundColor);
@@ -232,7 +236,7 @@ public class ARView extends LinearLayout {
         }
     }
 
-    public void setFooterRowsCountAndStyle(final int count, final int textColor, final int backgroundColor, final float alpha){
+    public void setFooterRowsCountAndStyle(final int count, @ColorInt final int textColor, @ColorInt final int backgroundColor, final float alpha){
         setFooterRowCount(count);
         setFooterRowStyle(textColor, backgroundColor, alpha);
     }
@@ -241,9 +245,9 @@ public class ARView extends LinearLayout {
         this.footerRowCount=count;
     }
 
-    public void setFooterRowStyle(final int textColor, final int backgroundColor, final float alpha) {
+    public void setFooterRowStyle(@ColorInt final int textColor, @ColorInt final int backgroundColor, final float alpha) {
         for (int i = rows.length-1; i>(rows.length-footerRowCount-1);i--){
-            rowStyleHashMap.put(Integer.valueOf(i),new RowStyle(textColor,backgroundColor,alpha));
+            rowStyleHashMap.put(i,new RowStyle(textColor,backgroundColor,alpha));
             for (int j=0; j < rows[i]; j++) {
                 getCellView(i, j).setTextColor(textColor);
                 getCellView(i, j).setBackgroundColor(backgroundColor);
@@ -252,18 +256,18 @@ public class ARView extends LinearLayout {
         }
     }
 
-    private String getCellDefaultContent(final @NotNull int row, final @NotNull int cell){
-        return "("+row+","+cell+")";
+    private String getCellDefaultContent(final int row, final int cell){
+        return getContext().getString(R.string.ar_cell_content, row, cell);
     }
 
-    public void setRowsStyle(final int textColor, final int backgroundColor, final float alpha){
+    public void setRowsStyle(@ColorInt final int textColor, @ColorInt final int backgroundColor, final float alpha){
         for (int i = headerRowCount; i<(rows.length-footerRowCount);i++){
             setRowStyle(i,textColor,backgroundColor,alpha);
         }
     }
 
-    public void setRowStyle(final int row, final int textColor, final int backgroundColor, final float alpha){
-        rowStyleHashMap.put(Integer.valueOf(row),new RowStyle(textColor,backgroundColor,alpha));
+    public void setRowStyle(final int row, @ColorInt final int textColor, @ColorInt final int backgroundColor, final float alpha){
+        rowStyleHashMap.put(row,new RowStyle(textColor,backgroundColor,alpha));
         for (int j=0; j < rows[row]; j++) {
             getCellView(row, j).setTextColor(textColor);
             getCellView(row, j).setBackgroundColor(backgroundColor);
@@ -272,7 +276,7 @@ public class ARView extends LinearLayout {
     }
 
     public RowStyle getRowStyle(final int rowIndex){
-        return rowStyleHashMap.get(Integer.valueOf(rowIndex));
+        return rowStyleHashMap.get(rowIndex);
     }
 
 }
