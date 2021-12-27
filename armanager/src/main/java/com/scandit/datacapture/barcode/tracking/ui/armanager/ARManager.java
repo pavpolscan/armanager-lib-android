@@ -26,4 +26,6 @@ public interface ARManager {
     //    List<BarcodeAreaRange> defineRanges(float[] rangePoints);
 
     ARView getARViewFor(TrackedBarcode trackedBarcode, Map<String,String> arViewData);
+
+    boolean barcodeAreaInSameRange(final TrackedBarcode trackedBarcode);
 }
