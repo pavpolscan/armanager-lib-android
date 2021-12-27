@@ -165,4 +165,4 @@ This sample is incomplete and lacks following functionality:
 - more styling options for ARViews including footer row(s) styling, corner rounding, border's etc
 - this is Android-only implementation, quick and very dirty, it is not suitable for any production app, could only serve as prototype for idea
 
-Ыфьу framework can be developed for iOS as well as MDF's (Flutter, React Native, Xamarin others)
+Same framework can be developed for iOS as well as MDF's (Flutter, React Native, Xamarin others)
