@@ -10,6 +10,10 @@ This is simple project to test an idea of reference AR implementation with follo
 
 This repo contains ARManager library alone (test app is not included)
 
+## Example Application 
+Please check out the sample app from this repository 
+[https://github.com/pavpolscan/armanager-sample-app-android](https://github.com/pavpolscan/armanager-sample-app-android)
+
 ## Installation 
 To get a Git project into your build:
 
@@ -153,7 +157,7 @@ public View viewForTrackedBarcode(@NotNull BarcodeTrackingAdvancedOverlay barcod
 ```
 ## Full sample
 
-Please see full code sample in https://github.com/pavpolscan/armanager/blob/6616d0f3a7c5e2a514a249209c07140dbc25b86d/MatrixScanSimpleSample/src/main/java/com/scandit/datacapture/matrixscansimplesample/MatrixScanActivity.java#L165
+Please see full code sample of ARManager configuration and use here: [https://github.com/pavpolscan/armanager-sample-app-android/blob/main/MatrixScanSimpleSample/src/main/java/com/scandit/datacapture/matrixscansimplesample/MatrixScanActivity.java](https://github.com/pavpolscan/armanager-sample-app-android/blob/main/MatrixScanSimpleSample/src/main/java/com/scandit/datacapture/matrixscansimplesample/MatrixScanActivity.java)
 
 ##TODO's
 This sample is incomplete and lacks following functionality:
