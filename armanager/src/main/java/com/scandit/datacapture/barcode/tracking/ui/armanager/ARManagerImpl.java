@@ -21,7 +21,8 @@ public class ARManagerImpl implements ARManager{
     private final float displayArea;
 
     private DataCaptureView dataCaptureView;
-    private HashMap<BarcodeAreaRange,ARView> rangeARViewHashMap =new HashMap<>();
+    private HashMap<BarcodeAreaRange,ARView> rangeARViewHashMap = new HashMap<>();
+    private HashMap<String, BarcodeAreaRange> barcodeAreaOfCode = new HashMap<>();
 
     private ARManagerImpl(final Context context, final DataCaptureView dataCaptureView){
         this.context = context;
@@ -63,11 +64,35 @@ public class ARManagerImpl implements ARManager{
     @Override
     public ARView getARViewFor(final TrackedBarcode trackedBarcode, final Map<String,String> arViewData) {
         Float area=determineBarcodeArea(trackedBarcode);
+        BarcodeAreaRange barcodeAreaRange=getBarcodeAreaRangeForArea(area);
+
         ARView arView=getARViewForArea(area);
         if (arView!=null) {
             arView.fillCellsData(arViewData);
         }
+
+        barcodeAreaOfCode.put(trackedBarcode.getBarcode().getData(),barcodeAreaRange);
+
         return arView;
+    }
+
+    public void removeARView(final TrackedBarcode trackedBarcode){
+        barcodeAreaOfCode.remove(trackedBarcode.getBarcode().getData());
+    }
+
+    public boolean barcodeAreaInSameRange(final TrackedBarcode trackedBarcode){
+        Float area = determineBarcodeArea(trackedBarcode);
+        BarcodeAreaRange barcodeAreaRange = barcodeAreaOfCode.get(trackedBarcode.getBarcode().getData());
+        return (barcodeAreaRange!=null && barcodeAreaRange.isAreaWithinRange(area)) ? true : false;
+    }
+
+    private BarcodeAreaRange getBarcodeAreaRangeForArea(final Float area) {
+        for (Map.Entry<BarcodeAreaRange,ARView> rangeARViewEntry: rangeARViewHashMap.entrySet()){
+            if (rangeARViewEntry.getKey().isAreaWithinRange(area)){
+                return rangeARViewEntry.getKey();
+            }
+        }
+        return null;
     }
 
     private ARView getARViewForArea(final Float area) {
