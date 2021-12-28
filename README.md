@@ -10,6 +10,10 @@ This is simple project to test an idea of reference AR implementation with follo
 
 This repo contains ARManager library alone (test app is not included). 
 ## Sample App
+![image](https://user-images.githubusercontent.com/70104733/147549026-766040c5-c095-4a45-a1f0-d1f0b3b7aa4c.png)
+
+YouTube video [here](https://youtu.be/-KJBS5xC0d8)
+
 Please check out the sample application which use ARManager for Scandit Data Capture SDK for Android here [https://github.com/pavpolscan/armanager-sample-app-android](https://github.com/pavpolscan/armanager-sample-app-android)
 ## Dependencies
 ARManager is a dedicated AR-centric library for proprietary Scandit Data Capture SDK for Android v.6.10+. 
