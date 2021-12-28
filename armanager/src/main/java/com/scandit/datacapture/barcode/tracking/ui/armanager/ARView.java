@@ -11,27 +11,22 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
+import androidx.annotation.Nullable;
 import androidx.annotation.Px;
 import androidx.annotation.Size;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 public class ARView extends LinearLayout {
 
     private int[] rows;
     private float[] radii={0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f};
-    private int columnsCount;
     private int headerRowCount=0;
     private int footerRowCount=0;
-    private HashMap<ARCellId,ARCell> cellMap=new HashMap<ARCellId,ARCell>();
-    private HashMap<String,ARCell> cellByNameMap=new HashMap<String,ARCell>();
-    private HashMap<Integer,RowStyle> rowStyleHashMap =new HashMap<Integer, RowStyle>();
+    private ARCell[][] cellMap = new ARCell[0][0];
+    private final HashMap<String,ARCell> cellByNameMap=new HashMap<String,ARCell>();
+    private final HashMap<Integer,RowStyle> rowStyleHashMap =new HashMap<Integer, RowStyle>();
 
     public ARView(Context context) {
         super(context);
@@ -40,7 +35,8 @@ public class ARView extends LinearLayout {
     public ARView(Context context, int[] rows) {
         super(context);
         this.rows=rows;
-        this.columnsCount=getColumnsCount(rows);
+        int columnsCount = getColumnsCount(rows);
+        this.cellMap = new ARCell[this.rows.length][columnsCount];
         for (int i=0; i < rows.length; i++) {
             LinearLayout row = new LinearLayout(context);
             row.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT,1.0f));
@@ -150,24 +146,30 @@ public class ARView extends LinearLayout {
     }
 
     private int getColumnsCount(final int[] rows) {
-        List l=new LinkedList();
+        int max = Integer.MIN_VALUE;
         for (int i:rows){
-           l.add(new Integer(i));
+           if (max < i) {
+               max = i;
+           }
         }
-        int max=((Integer)Collections.max(l)).intValue();
         return max;
     }
 
     private void setCell(final int i, final  int j,final View cellView) {
         ARCell cell=new ARCell(i,j,cellView);
-        cellMap.put(cell.getCellId(),cell);
-        cellByNameMap.put(cell.getCellName(),cell);
+        cellMap[i][j] = cell;
+        if (cell.getCellName() != null) {
+            cellByNameMap.put(cell.getCellName(), cell);
+        }
     }
 
-    public void setCellName(final int rowIndex, final int cellIndex, final String name){
+    public void setCellName(final int rowIndex, final int cellIndex, @Nullable  final String name){
         ARCell arCell=getCell(rowIndex,cellIndex);
+        cellByNameMap.remove(arCell.getCellName());
         arCell.setCellName(name);
-        cellByNameMap.put(name,arCell);
+        if (name != null) {
+            cellByNameMap.put(name, arCell);
+        }
     }
 
     public TextView getCellView(final int rowIndex, final int cellIndex){
@@ -180,15 +182,7 @@ public class ARView extends LinearLayout {
     }
 
     public ARCell getCell(final int rowIndex, final int cellIndex){
-
-        for(ARCellId cellId:cellMap.keySet()){
-            if (cellId.getRow()==rowIndex && cellId.getCell()==cellIndex)
-            {
-                ARCell target=cellMap.get(cellId);
-                return target;
-            }
-        }
-        return null;
+        return cellMap[rowIndex][cellIndex];
     }
 
     public ARCell getCell(final String cellName){
@@ -199,7 +193,7 @@ public class ARView extends LinearLayout {
     public RowStyle getCellStyle(final String cellName){
         ARCell arCell = getCell(cellName);
         int row = arCell.getCellId().getRow();
-        RowStyle rowStyle = rowStyleHashMap.get(Integer.valueOf(row));
+        RowStyle rowStyle = rowStyleHashMap.get(row);
         return rowStyle;
     }
 
@@ -211,7 +205,7 @@ public class ARView extends LinearLayout {
         for(Map.Entry<String,String> displayDataMapEntry: displayDataMap.entrySet()){
             ARCell targetCell=cellByNameMap.get(displayDataMapEntry.getKey());
             if (targetCell!=null){
-                targetCell.setCellContents(displayDataMapEntry.getValue());
+                ((TextView)targetCell.getView()).setText(displayDataMapEntry.getValue());
             }
         }
     }
