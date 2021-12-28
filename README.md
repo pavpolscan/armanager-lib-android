@@ -9,7 +9,8 @@ This is simple project to test an idea of reference AR implementation with follo
 - ready to use yet extensible for your own needs
 
 This repo contains ARManager library alone (test app is not included). 
-
+## Sample App
+Please check out the sample application which use ARManager for Scandit Data Capture SDK for Android here [https://github.com/pavpolscan/armanager-sample-app-android](https://github.com/pavpolscan/armanager-sample-app-android)
 ## Dependencies
 ARManager is a dedicated AR-centric library for proprietary Scandit Data Capture SDK for Android v.6.10+. 
 
@@ -233,7 +234,7 @@ public View viewForTrackedBarcode(@NotNull BarcodeTrackingAdvancedOverlay barcod
 
 Please see full code sample of ARManager configuration and use here: [https://github.com/pavpolscan/armanager-sample-app-android/blob/main/MatrixScanSimpleSample/src/main/java/com/scandit/datacapture/matrixscansimplesample/MatrixScanActivity.java](https://github.com/pavpolscan/armanager-sample-app-android/blob/main/MatrixScanSimpleSample/src/main/java/com/scandit/datacapture/matrixscansimplesample/MatrixScanActivity.java)
 
-##TODO's
+## TODO's
 This sample is incomplete and lacks following functionality:
 - change ARView orientation based on device/barcode orientation 
 - more styling options for ARViews including footer row(s) styling, corner rounding, border's etc
