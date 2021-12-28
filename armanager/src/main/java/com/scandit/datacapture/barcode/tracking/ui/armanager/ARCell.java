@@ -1,7 +1,9 @@
 package com.scandit.datacapture.barcode.tracking.ui.armanager;
 
 import android.view.View;
-import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public class ARCell {
     private final ARCellId cellId;
@@ -12,22 +14,21 @@ public class ARCell {
         this.view=view;
     }
 
-    protected void setCellName(String cellName){
+    protected void setCellName(@Nullable String cellName){
         this.cellId.setCellName(cellName);
     }
 
+    @Nullable
     public String getCellName(){
         return this.cellId.getCellName();
     }
 
+    @NonNull
     public ARCellId getCellId(){
         return this.cellId;
     }
 
-    public void setCellContents(String value){
-        ((TextView)this.view).setText(value);
-    }
-
+    @NonNull
     public View getView() {
         return view;
     }

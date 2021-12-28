@@ -1,5 +1,7 @@
 package com.scandit.datacapture.barcode.tracking.ui.armanager;
 
+import androidx.annotation.Size;
+
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -9,14 +11,24 @@ public class BarcodeAreaRange {
 
     public BarcodeAreaRange(final float lowerBound,final float upperBound){
         //if developer will mix lower and upper, we will assign larger value to upper bound
-        this.upperBound=(upperBound >= lowerBound ? upperBound : lowerBound);
-        this.lowerBound=(lowerBound < upperBound ? lowerBound : upperBound);
+        this.upperBound = Math.max(upperBound, lowerBound);
+        this.lowerBound = Math.min(lowerBound, upperBound);
     }
 
-    public BarcodeAreaRange(final float[] barcodeAreaRange){
-        Arrays.sort(barcodeAreaRange);
-        this.lowerBound=barcodeAreaRange[0];
-        this.upperBound=barcodeAreaRange[barcodeAreaRange.length-1];
+    public BarcodeAreaRange(@Size(min = 2) final float[] barcodeAreaRange){
+        float min = Float.MAX_VALUE;
+        float max = Float.MIN_VALUE;
+        for (float value : barcodeAreaRange) {
+            if (min > value) {
+                min = value;
+            }
+            if (max < value) {
+                max = value;
+            }
+        }
+
+        this.lowerBound = min;
+        this.upperBound = max;
     }
 
     public boolean isAreaWithinRange(final float area){
