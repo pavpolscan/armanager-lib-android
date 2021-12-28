@@ -1,5 +1,7 @@
 package com.scandit.datacapture.barcode.tracking.ui.armanager;
 
+import androidx.annotation.Nullable;
+
 import java.util.Objects;
 
 public class ARCellId {
@@ -11,16 +13,17 @@ public class ARCellId {
         this.cell=cell;
     }
 
-    public ARCellId(int row, int cell, String cellName) {
+    public ARCellId(int row, int cell, @Nullable String cellName) {
         this.row=row;
         this.cell=cell;
         this.cellName=cellName;
     }
 
-    public void setCellName(String cellName) {
+    public void setCellName(@Nullable String cellName) {
         this.cellName=cellName;
     }
 
+    @Nullable
     public String getCellName(){
         return this.cellName;
     }
@@ -31,6 +34,11 @@ public class ARCellId {
 
     public int getRow() {
         return row;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(row, cell, cellName);
     }
 
     @Override

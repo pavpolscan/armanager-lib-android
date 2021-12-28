@@ -6,16 +6,19 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RestrictTo;
+import androidx.annotation.Size;
+
 import com.scandit.datacapture.barcode.tracking.data.TrackedBarcode;
 import com.scandit.datacapture.core.common.geometry.Quadrilateral;
 import com.scandit.datacapture.core.ui.DataCaptureView;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.HashMap;
 import java.util.Map;
 
-public class ARManagerImpl implements ARManager{
+@RestrictTo(RestrictTo.Scope.LIBRARY)
+class ARManagerImpl implements ARManager{
 
     private final Context context;
     private final float displayArea;
@@ -30,13 +33,12 @@ public class ARManagerImpl implements ARManager{
         this.dataCaptureView=dataCaptureView;
     }
 
-    protected static ARManager getInstance(final Context context, final DataCaptureView dataCaptureView) {
-        ARManager arManager = new ARManagerImpl(context, dataCaptureView);
-        return arManager;
+    static ARManager newInstance(final Context context, final DataCaptureView dataCaptureView) {
+        return new ARManagerImpl(context, dataCaptureView);
     }
 
     @Override
-    public ARView createView(final Context context, final @NotNull int[] rows) {
+    public ARView createView(final Context context, final @NonNull int[] rows) {
         return new ARView(context, rows);
     }
 
@@ -47,14 +49,14 @@ public class ARManagerImpl implements ARManager{
     }
 
     @Override
-    public ARView setViewLayoutForRange(final float[] barcodeAreaRange, final ARView arView) {
+    public ARView setViewLayoutForRange(@Size(min = 2) final float[] barcodeAreaRange, final ARView arView) {
         BarcodeAreaRange barcodeAreaRange1=new BarcodeAreaRange(barcodeAreaRange);
         rangeARViewHashMap.put(barcodeAreaRange1,arView);
         return rangeARViewHashMap.get(barcodeAreaRange1);
     }
 
     @Override
-    public ARView setViewLayoutForRange(final Context context, final float[] barcodeAreaRange, int[] viewRows) {
+    public ARView setViewLayoutForRange(final Context context, @Size(min = 2) final float[] barcodeAreaRange, int[] viewRows) {
         BarcodeAreaRange barcodeAreaRange1=new BarcodeAreaRange(barcodeAreaRange);
         ARView arView=createView(context,viewRows);
         rangeARViewHashMap.put(barcodeAreaRange1,arView);
@@ -83,7 +85,7 @@ public class ARManagerImpl implements ARManager{
     public boolean barcodeAreaInSameRange(final TrackedBarcode trackedBarcode){
         Float area = determineBarcodeArea(trackedBarcode);
         BarcodeAreaRange barcodeAreaRange = barcodeAreaOfCode.get(trackedBarcode.getBarcode().getData());
-        return (barcodeAreaRange!=null && barcodeAreaRange.isAreaWithinRange(area)) ? true : false;
+        return barcodeAreaRange != null && barcodeAreaRange.isAreaWithinRange(area);
     }
 
     private BarcodeAreaRange getBarcodeAreaRangeForArea(final Float area) {
