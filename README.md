@@ -2,6 +2,8 @@
  
 Main goal of ARManager - ease life with creation/population/resizing and rotation of Scandit MatrixScan Augmented Reality views for the trackedBarcodes on the screen in case BarcodeTrackingAdvancedLayoutOverlay is used.
 
+Place yourself into developer shoes - if you’re just starting with Scandit SDK - on one hand you have data object (order or parcel) with some properties, on another - requirement to display the AR for it. There is nothing of help in between at the moment and if you have never done it before, AR will take long. ARManager is aimed to close this gap and with pure programmatic approach.
+
 This is simple project to test an idea of reference AR implementation with following ideas in mind:
 - programmatic AR view templates configuration
 - table-based AR templates layout
